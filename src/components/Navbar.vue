@@ -2,7 +2,7 @@
   <nav>
     <v-toolbar>
       <v-btn text @click="drawer = !drawer">
-        <v-icon class="mx-6 grey--text">menu</v-icon>
+        <v-icon class="grey--text">menu</v-icon>
       </v-btn>
       <!-- <v-toolbar-title class="grey--text">
               <span class="font-weight-light">FLC</span>
