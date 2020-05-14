@@ -19,7 +19,9 @@
 
             <v-checkbox class="mr-7 mt-0" label="Anden modtager"></v-checkbox>
             <v-checkbox class="mt-0" label="Vælg afdeling"></v-checkbox>
-            <v-btn @click="nyOprettelse()" class="blue" dark>Send link til brugeroprettelse </v-btn>
+            <router-link to="/survey">
+            <v-btn @click="nyOprettelse(), dialog2 = false" class="blue" dark>Send link til brugeroprettelse </v-btn>
+            </router-link>
 
           </v-form>
           
@@ -59,12 +61,12 @@ export default {
   },
   methods: {
       nyOprettelse() {
-          const brugeroprettelse = {
+          const nybruger = {
               virksomhed: this.virk,
               modtager: this.modtager
           };
-          db.collection("brugeroprettelser").add(brugeroprettelse).then(() => {
-              console.log("Added to db")
+          db.collection("nybrugeroprettelse").add(nybruger).then(() => {
+              this.dialog2 = false;
           })
 
       }

@@ -54,10 +54,9 @@
                   @click:append="showPassword = !showPassword"
                 ></v-text-field>
                 <p>Lokation:</p>
-                
+
                 <v-checkbox class="mr-7 mt-0" v-model="lokation" value="aarhus" label="Aarhus"></v-checkbox>
-                <v-checkbox  class="mt-0" v-model="lokation" value="odense" label="Odense"></v-checkbox>
-                
+                <v-checkbox class="mt-0" v-model="lokation" value="odense" label="Odense"></v-checkbox>
               </v-card>
               <v-btn text @click="visible = !visible">Tilbage</v-btn>
               <v-btn color="primary" @click="stepper = 2">Næste</v-btn>
@@ -73,16 +72,16 @@
                 <v-select
                   name="brugertype"
                   v-model="brugertype"
-                  :items="brugertype"
-                  label="Vælg brugertype"
+                  :items="brugertyper"
+                  label="Brugertype tilvalg"
                 ></v-select>
                 <v-select
                   name="mailgruppe"
                   v-model="mailgruppe"
-                  :items="mailgruppe"
+                  :items="mailgrupper"
                   label="Vælg mailgruppe"
                 ></v-select>
-                <v-select name="pc" v-model="pcer" :items="pcer" label="Vælg PC"></v-select>
+                <v-select name="pc" v-model="pcer" :items="pcere" label="Vælg PC"></v-select>
               </v-card>
               <v-btn text @click="stepper = 1">Tilbage</v-btn>
               <v-btn color="primary" @click="stepper = 3">Næste</v-btn>
@@ -96,7 +95,7 @@
                 <v-select
                   name="tilbehor"
                   v-model="tilbehor"
-                  :items="tilbehor"
+                  :items="tilbehore"
                   label="Vælg tilbehør"
                 ></v-select>
               </v-card>
@@ -124,34 +123,42 @@ export default {
   name: "Survey",
   data() {
     return {
-      lokation: '',
+      lokation: "",
+      virksomhed: "Olav de Linde",
       visible: false,
       valid: true,
       stepper: 1,
       navn: "",
       initialer: "",
       rettigheder: "",
-      brugertype: [
-        "Brugertype 1",
-        "Brugertype 2",
-        "Brugertype 3",
-        "Brugertype 4",
-        "Brugertype 5"
+      brugertyper: [
+        "Ledelse",
+        "Administration",
+        "Udlejning",
+        "Tegnestue",
+        "Vicevært"
       ],
-      mailgruppe: [
-        "Mailgruppe 1",
-        "Mailgruppe 2",
-        "Mailgruppe 3",
-        "Mailgruppe 4",
-        "Mailgruppe 5"
+      mailgrupper: [
+        "Alle",
+        "Aarhus",
+        "Odense",
+        "Viceværter Aarhus",
+        "Viceværter Odense"
       ],
-      pcer: ["PC 1", "PC 2", "PC 3", "PC 4", "PC 5", "PC 6"],
-      tilbehor: [
-        "Tilbehør 1",
-        "Tilbehør 2",
-        "Tilbehør 3",
-        "Tilbehør 4",
-        "Tilbehør 5"
+      pcere: [
+        "Genbrug af eksisterende klientudstyr",
+        "Ledelse - bærebar",
+        "Tegnestue - stationær workstation",
+        "Tegnestue - bærbar workstation",
+        "Administration - bærbar",
+        "Udlejning - stationær"
+      ],
+      tilbehore: [
+        "Skærme genbruges",
+        "1 ny skærm",
+        "2 nye skræme",
+        "Mus og tastatur",
+        "Dockingstation"
       ],
       showPassword: false,
       password: "Password"
@@ -160,6 +167,7 @@ export default {
   methods: {
     submit() {
       const brugeroprettelse = {
+        virksomhed: this.virksomhed,
         navn: this.navn,
         initialer: this.initialer,
         rettigheder: this.rettigheder,
@@ -178,14 +186,6 @@ export default {
     }
   }
 };
-
-//
-//   showPassword: false,
-//   password: "Password",
-//   rules: {
-//     required: value => !!value || "Required.",
-//     min: v => v.length >= 8 || "Min 8 characters"
-//   }
 </script>
 
 <style>

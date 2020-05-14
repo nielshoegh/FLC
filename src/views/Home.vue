@@ -12,13 +12,35 @@
         hide-details
       ></v-text-field>
       </div>
+      <v-simple-table>
+        <thead>
+          <tr>
+            <th class="text-left">Virksomhed</th>
+            <th class="text-left">Initialer</th>
+            <th class="text-left">Modtagelsesdato</th>
+            <th class="text-left">Deadline</th>
+            <th class="text-left">Prioritet</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  v-for="(brugeroprettelse, index) in brugeroprettelser" :key="index.brugeroprettelse">
+            <td>{{ brugeroprettelse.virksomhed }}</td>
+            <td>{{brugeroprettelse.initialer}}</td>
+            <td>{{brugeroprettelse.lokation}}</td>
+            <td>{{brugeroprettelse.pc}}</td>
+            <td>{{brugeroprettelse.brugertype}}</td>
+            
+          </tr>
+        </tbody>
+      </v-simple-table>
 
-      <v-data-table class="flc-data-containers"
+
+      <!-- <v-data-table class="flc-data-containers"
         :headers="headers"
         :items="brugeroprettelser"
         :search="search"
         hide-default-footer
-      ></v-data-table>
+      ></v-data-table> -->
     </v-card>
     </v-container>
     <v-container class="col-4"><p>test</p></v-container>
@@ -26,12 +48,12 @@
 </template>
 
 <script>
-
-
-
+import db from '@/fb.js'
 
 export default {
+
   data() {
+    
     return {
       search: "",
       headers: [
@@ -47,89 +69,24 @@ export default {
         { text: "Deadline", class:'blue darken-2 white--text subtitle-1', value: "ddato" },
         { text: "Prioritet", class:'blue darken-2 white--text subtitle-1', value: "prio" }
       ],
-      brugeroprettelser: [
-        {
-          virk: 'Olav de Linde',
-          name: 2,
-          ini: 'JLP',
-          mdato: '21-05-2020',
-          ddato: '26-05-2020',
-          prio: '3',
+      brugeroprettelser: [{
         },
-        {
-          virk: 'Advokaterne der gemmer alt deres lort i den der sky',
-          ini: 'JLP',
-          mdato: '21-05-2020',
-          ddato: '26-05-2020',
-          prio: '3',
-        },
-        {
-          virk: 'BOlav de Linde',
-          ini: 'JLP',
-          mdato: '21-05-2020',
-          ddato: '26-05-2020',
-          prio: '3',
-        },
-        {
-          virk: 'BOlav de Linde',
-          ini: 'JLP',
-          mdato: '21-05-2020',
-          ddato: '26-05-2020',
-          prio: '3',
-        },
-        {
-          virk: 'BOlav de Linde',
-          ini: 'JLP',
-          mdato: '21-05-2020',
-          ddato: '26-05-2020',
-          prio: '3',
-        },
-        {
-          virk: 'BOlav de Linde',
-          ini: 'JLP',
-          mdato: '21-05-2020',
-          ddato: '26-05-2020',
-          prio: '3',
-        },
-        {
-          virk: 'BOlav de Linde',
-          ini: 'JLP',
-          mdato: '21-05-2020',
-          ddato: '26-05-2020',
-          prio: '3',
-        },
-        {
-          virk: 'BOlav de Linde',
-          ini: 'JLP',
-          mdato: '21-05-2020',
-          ddato: '26-05-2020',
-          prio: '3',
-        },
-        {
-          virk: 'BOlav de Linde',
-          ini: 'JLP',
-          mdato: '21-05-2020',
-          ddato: '26-05-2020',
-          prio: '3',
-        },
-        {
-          virk: 'BOlav de Linde',
-          ini: 'JLP',
-          mdato: '21-05-2020',
-          ddato: '26-05-2020',
-          prio: '3',
-        },
-        {
-          virk: 'BOlav de Linde',
-          ini: 'JLP',
-          mdato: '21-05-2020',
-          ddato: '26-05-2020',
-          prio: '3',
-        },
-      ]
-                
-      
+      ],
     };
+
+  },
+  created() {
+    db.collection('brugeroprettelser').onSnapshot(res => {
+      const changes = res.docChanges();
+
+      changes.forEach(change => {
+        if (change.type === 'added') {
+            this.brugeroprettelser.push({
+              ...change.doc.data()
+            })
+        }
+      })
+    })
   }
 };
 </script>

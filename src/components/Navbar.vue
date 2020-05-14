@@ -1,20 +1,6 @@
 <template>
   <nav>
-    <v-toolbar flat>
-      <v-btn text @click="drawer = !drawer">
-        <v-icon class="grey--text">menu</v-icon>
-      </v-btn>
-      <!-- <v-toolbar-title class="grey--text">
-              <span class="font-weight-light">FLC</span>
-              <span class="font-weight-bold text-uppercase">Syncronize</span>
-      </v-toolbar-title>-->
-      <v-spacer></v-spacer>
-      <v-btn color="grey">
-        <span>Sign Out</span>
-        <v-icon right>exit_to_app</v-icon>
-      </v-btn>
-    </v-toolbar>
-    <v-navigation-drawer app permanent v-model="drawer">
+   <v-navigation-drawer app permanent v-model="drawer">
       <v-list-item class="py-5 pt-12">
         <v-list-item-content>
           <v-img src="../assets/flc-syncronize-logo.svg" max-width="190" class="mx-auto"></v-img>
@@ -27,7 +13,7 @@
           <!-- -->
       <v-list class="mt-6">
           <!-- Navigation links -->
-        <v-list-item v-for="nav in navigation" :key="nav.title" link>
+        <v-list-item v-for="nav in navigation" :key="nav.title" router :to="nav.route">
           <v-list-item-icon>
             <v-icon>{{ nav.icon }}</v-icon>
           </v-list-item-icon>
@@ -39,6 +25,7 @@
       </v-list>
         <!--  -->
     </v-navigation-drawer>
+    <v-btn icon class="signout white--text"><v-icon>exit_to_app</v-icon></v-btn>
   </nav>
 </template>
 
@@ -52,11 +39,12 @@ export default {
       drawer: true,
 
       navigation: [
-        { title: "Dashboard", icon: "dashboard" },
+        { title: "Dashboard", icon: "dashboard", route: '/'},
         { title: "Brugeroprettelser", icon: "description" },
         { title: "Årsmøder", icon: "forum" },
         { title: "Guides", icon: "find_in_page" },
-        { title: "Screen manager", icon: "tv" }
+        { title: "Screen manager", icon: "tv" },
+        { title: "Survey", icon: "link", route: '/survey' },
       ]
     };
   }
@@ -65,5 +53,14 @@ export default {
 <style>
 .v-toolbar__content {
   background-color: #F7FAFF;
+}
+
+.signout {
+  width: 200px;
+  height:200px;
+  position: absolute;
+  top:0;
+  right:0;
+  z-index:200;
 }
 </style>
