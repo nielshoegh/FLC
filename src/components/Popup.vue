@@ -8,13 +8,25 @@
       <v-dialog v-model="dialog2" max-width="500px">
         <v-card>
           <v-card-title class="blue--text">Opret ny bruger</v-card-title>
-          <v-card-text>
-            <v-autocomplete v-model="value" :items="items" dense filled label="Filled" background-color="transparent" prepend-icon="mdi-database-search"
-></v-autocomplete>
-            <v-select :items="select" label="Modtager" item-value="text" class=""></v-select>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn color="primary" text @click="dialog2 = false">Close</v-btn>
+          <v-form class="pa-6">
+              
+            <v-text-field flat v-model="virk" label="Virksomhed" ></v-text-field>
+            <v-select 
+            name="modtager"
+            v-model="modtager"
+            :items="modtagere"
+            label="Vælg modtager"></v-select>
+
+            <v-checkbox class="mr-7 mt-0" label="Anden modtager"></v-checkbox>
+            <v-checkbox class="mt-0" label="Vælg afdeling"></v-checkbox>
+            <v-btn @click="nyOprettelse()" class="blue" dark>Send link til brugeroprettelse </v-btn>
+
+          </v-form>
+          
+
+          <v-card-actions class="right-corner" @click="dialog2 = false">
+            <v-icon class="mt-1 red--text">close</v-icon>
+            <!-- <v-btn color="primary" text @click="dialog2 = false">Close</v-btn> -->
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -24,42 +36,51 @@
 
 
 <script>
+import db from "@/fb.js";
+
 export default {
+
+
   data() {
     return {
-      dialog: false,
-      dialog2: false,
-      dialog3: false,
-      notifications: false,
-      sound: true,
-      widgets: false,
-      items: [
-        {
-          title: "Click Me"
-        },
-        {
-          title: "Click Me"
-        },
-        {
-          title: "Click Me"
-        },
-        {
-          title: "Click Me 2"
-        }
+        virk: "",
+        modtager: "",
+        
+      modtagere: [
+          "Jeanette, JHG",
+          "Peter, PTH",
+          "Sofie, SOF",
+          "Jonas, JLP",
+          "Ulrik, UO",
+          "Tina, TUA"
       ],
-      select: [
-        { text: "State 1" },
-        { text: "State 2" },
-        { text: "State 3" },
-        { text: "State 4" },
-        { text: "State 5" },
-        { text: "State 6" },
-        { text: "State 7" }
-      ]
+      dialog2: false
     };
+  },
+  methods: {
+      nyOprettelse() {
+          const brugeroprettelse = {
+              virksomhed: this.virk,
+              modtager: this.modtager
+          };
+          db.collection("brugeroprettelser").add(brugeroprettelse).then(() => {
+              console.log("Added to db")
+          })
+
+      }
   }
 };
 </script>
 
 <style>
+
+.right-corner {
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 </style>
