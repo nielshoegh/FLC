@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-toolbar>
+    <v-toolbar flat>
       <v-btn text @click="drawer = !drawer">
         <v-icon class="grey--text">menu</v-icon>
       </v-btn>
@@ -14,18 +14,18 @@
         <v-icon right>exit_to_app</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-navigation-drawer app temporary v-model="drawer">
+    <v-navigation-drawer app permanent v-model="drawer">
       <v-list-item class="py-5 pt-12">
         <v-list-item-content>
-          <v-list-item-title><v-img src="../assets/flc-syncronize-logo.svg" max-width="190" class="mx-auto"></v-img></v-list-item-title>
+          <v-img src="../assets/flc-syncronize-logo.svg" max-width="190" class="mx-auto"></v-img>
         </v-list-item-content>
       </v-list-item>
       <v-list-item>
-          <!-- Opret ny bruger knap -->
-        <v-btn class="blue white--text" block> <v-icon left>add</v-icon> OPRET NY BRUGER</v-btn>
+          <!-- Opret ny bruger knap - COMPONENT -->
+        <Popup />
       </v-list-item>
           <!-- -->
-      <v-list>
+      <v-list class="mt-6">
           <!-- Navigation links -->
         <v-list-item v-for="nav in navigation" :key="nav.title" link>
           <v-list-item-icon>
@@ -43,7 +43,10 @@
 </template>
 
 <script>
+import Popup from './Popup.vue'
+
 export default {
+  components: { Popup },
   data() {
     return {
       drawer: true,
@@ -60,4 +63,7 @@ export default {
 };
 </script>
 <style>
+.v-toolbar__content {
+  background-color: #F7FAFF;
+}
 </style>

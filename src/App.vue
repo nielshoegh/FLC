@@ -1,6 +1,6 @@
 <template>
   <v-app class="grey lighten-4">
-  <Navbar />    
+  <Navbar v-if="$route.Survey!='reset'"/>    
     <v-content>
       <router-view></router-view>
     </v-content>
@@ -20,3 +20,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.v-content {
+  background-color: #F7FAFF;
+}
+</style>
